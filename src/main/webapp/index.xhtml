@@ -7,18 +7,20 @@
 
 <h:head>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="fontawesome.css"></h:outputStylesheet>
 </h:head>
 
 <h:body>
 
 	<p:commandButton value="Add New Employee" type="button"
 		onclick="PF('addEmployee').show();" />
+	
 	<br />
 	<br />
 
 	<h:form id="listOfEmp">
 		<p:dataTable id="empData" value="#{homeBean.employeeList}" var="emp"
-			styleClass="employeeTable" paginator="true">
+			styleClass="employeeTable" >
 
 			<p:column headerText="Id">
 				<h:outputText value="#{emp.id}" />
@@ -100,7 +102,7 @@
 						itemValue="#{_dept.id}" itemLabel="#{_dept.name}" />
 				</p:selectOneMenu>
 				<h:panelGroup>
-					<p:commandButton value="Cancel" onclick="PF('addEmployee').hide()"/>
+					<p:commandButton value="Cancel" onclick="PF('addEmployee').hide()" icon="fa fa-times"/>
 					
 					<p:commandButton value="Add" action="#{homeBean.addNewEmployee()}"
 						update=":emform :listOfEmp"  />

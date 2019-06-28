@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+</h:head>
+
+<h:body>
+
+	<h:form id="emform">
+		<h2>Employee Form</h2>
+		<h:panelGrid columns="3" styleClass="panelgrid" id="grid">
+
+			<p:outputLabel for="name" value="Name:" />
+			<p:inputText id="name" required="true"
+				requiredMessage="Name is required"
+				validatorMessage="Please enter a valid name."
+				value="#{webHandler.employee.name}">
+				<f:validateRegex pattern="[a-zA-Z]{2,}" />
+			</p:inputText>
+			<p:message for="name" style="color:red" />
+
+			<p:outputLabel for="age" value="Age:" />
+			<p:inputText id="age" value="#{webHandler.employee.age}" size="20"
+				required="true" label="age" requiredMessage="Age is required"
+				converterMessage="Age must be a number."
+				validatorMessage="Age must be btween 18 and 45.">
+				<f:validateLongRange minimum="18" maximum="45" />
+			</p:inputText>
+			<p:message for="age" style="color:red" />
+
+			<p:outputLabel for="email" value="Email:" />
+			<p:inputText id="email" value="#{webHandler.employee.email}"
+				size="20" required="true" label="email"
+				requiredMessage="Email is requied"
+				validatorMessage="Email is invalid.">
+				<f:validateRegex
+					pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+			</p:inputText>
+			<p:message for="email" style="color:red" />
+
+			<p:outputLabel for="department" value="Department:" />
+			<p:selectOneMenu id="department" value="#{webHandler.department.id}"
+				valueChangeListener="#{webHandler.changeDepartment}">
+				<f:selectItems value="#{webHandler.departmentList}" var="_dept"
+					itemValue="#{_dept.id}" itemLabel="#{_dept.name}" />
+			</p:selectOneMenu>
+			<p:message for="department" style="color:red" />
+			<p:commandButton value="Add" action="#{webHandler.addNewEmployee()}" />
+
+		</h:panelGrid>
+
+	</h:form>
+
+	<br />
+	<br />
+
+	<h:form>
+		<p:dataTable id="empData" value="#{webHandler.employeeList}" var="emp"
+			styleClass="employeeTable" reflow="true" rows="5" paginator="true">
+
+			<p:column headerText="Id">
+				<h:outputText value="#{emp.id}" />
+			</p:column>
+
+			<p:column headerText="Name">
+				<h:outputText value="#{emp.name}" />
+			</p:column>
+
+			<p:column headerText="Age">
+				<h:outputText value="#{emp.age}" />
+			</p:column>
+
+			<p:column headerText="Email">
+				<h:outputText value="#{emp.email}" />
+			</p:column>
+
+			<p:column headerText="Department Name">
+				<h:outputText value="#{emp.department.name}" />
+			</p:column>
+
+
+			<p:column>
+
+				<p:commandButton value="Delete"
+					action="#{webHandler.deleteEmployeeFromPage(emp)}"
+					onclick="if(!confirm('Are you sure you want to permentaly delete this data?')) {return false;}">
+				</p:commandButton>
+			</p:column>
+
+			<p:column>
+				<p:commandLink >
+				</p:commandLink>
+				<p:commandButton value="Update"
+					action="#{webHandler.viewEmployee(emp)}">
+					<f:param name="eid" value="#{emp.id}"></f:param>
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+
+
+
+	</h:form>
+
+</h:body>
+</html>

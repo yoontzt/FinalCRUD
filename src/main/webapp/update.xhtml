@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+</h:head>
+<h:body>
+
+	<h:form id="emform">
+		<h2>Employee Form</h2>
+		<h:panelGrid columns="3" styleClass="panelgrid" id="grid">
+
+			<p:outputLabel for="name" value="Name:" />
+			<p:inputText id="name" required="true"
+				value="#{updateBean.employee.name}" requiredMessage="Name is required"
+				validatorMessage="Please enter a valid name.">
+				<f:validateRegex pattern="[a-zA-Z]{2,}" />
+			</p:inputText>
+			<p:message for="name" style="color:red" />
+
+			<p:outputLabel for="age" value="Age:" />
+			<p:inputText id="age" value="#{updateBean.employee.age}" size="20"
+				required="true" label="age" requiredMessage="Age is required"
+				converterMessage="Age must be a number."
+				validatorMessage="Age must be btween 18 and 45.">
+				<f:validateLongRange minimum="18" maximum="45" />
+			</p:inputText>
+			<p:message for="age" style="color:red" />
+
+			<p:outputLabel for="email" value="Email:" />
+			<p:inputText id="email" value="#{updateBean.employee.email}"
+				size="20" required="true" label="email"
+				requiredMessage="Email is requied"
+				validatorMessage="Email is invalid.">
+				<f:validateRegex
+					pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+			</p:inputText>
+			<p:message for="email" style="color:red" />
+
+			<p:outputLabel for="department" value="Department:" />
+			<p:selectOneMenu id="department" value="#{updateBean.id}"
+				valueChangeListener="#{updateBean.changeDepartment}">
+				<f:selectItems value="#{updateBean.departmentList}" var="_dept"
+					itemValue="#{_dept.id}" itemLabel="#{_dept.name}" />
+			</p:selectOneMenu>
+			<p:message for="department" style="color:red" />
+
+
+		</h:panelGrid>
+		<p:commandButton value="Back" action="index" />
+		<p:commandButton value="Update"
+			action="#{updateBean.updateEmployeeFromPage()}"
+			update="grid" onclick="if(!confirm('Are you sure you want to update this data?')) {return false;}" >
+		</p:commandButton>
+	</h:form>
+</h:body>
+
+</html>
