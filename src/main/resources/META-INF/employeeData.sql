@@ -8,3 +8,4 @@ insert into employee(name,age,email,department) values ('Yoon',20,'yoon@gmail.co
 insert into employee(name,age,email,department) values ('thin',20,'thin@gmail.com',2);
 insert into employee(name,age,email,department) values ('sindhu',21,'sindhu@gmail.com',3);
 insert into employee(name,age,email,department) values ('thanh',22,'thanh@gmail.com',4);
+insert into employee(name,age,email,department) values ('zhue',22,'zhue@gmail.com',5);

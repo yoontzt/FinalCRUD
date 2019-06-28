@@ -52,24 +52,26 @@ public class HomeBean implements Serializable {
 
 	}
 
-	public String addNewEmployee() {
+	public void addNewEmployee() {
 		employee.setDepartment(depService.toEntity(department));
 		empService.addEmployee(employee);
 		employeeList = empService.toBoms(empService.showAll());
-		return "index.xhtml?faces-redirect=true&includeViewParams=true";
+		PrimeFaces.current().executeScript("PF('addEmployee').hide()");
+		
 	}
 
-	public String updateEmployeeFromPage() {
+	public void updateEmployeeFromPage() {
 		employee.setDepartment(depService.toEntity(department));
 		empService.updateEmployee(employee);
 		employeeList = empService.toBoms(empService.showAll());
-		return "index.xhtml?faces-redirect=true&includeViewParams=true";
+		PrimeFaces.current().executeScript("PF('UpdateEmployee').hide()");
+		
 	}
 
-	public String deleteEmployeeFromPage(Employee employeeBOM) {
+	public void deleteEmployeeFromPage(Employee employeeBOM) {
 		empService.deleteEmployee(empService.toEntity(employeeBOM));
 		employeeList = empService.toBoms(empService.showAll());
-		return "index.xhtml?faces-redirect=true&includeViewParams=true";
+		
 	}
 
 	public void viewEmployee(Employee emp) {

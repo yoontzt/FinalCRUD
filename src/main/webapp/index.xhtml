@@ -100,9 +100,10 @@
 						itemValue="#{_dept.id}" itemLabel="#{_dept.name}" />
 				</p:selectOneMenu>
 				<h:panelGroup>
-					<p:commandButton value="Cancel" action="index" />
+					<p:commandButton value="Cancel" onclick="PF('addEmployee').hide()"/>
+					
 					<p:commandButton value="Add" action="#{homeBean.addNewEmployee()}"
-						update=":emform :listOfEmp" process="@form" />
+						update=":emform :listOfEmp"  />
 				</h:panelGroup>
 			</h:panelGrid>
 
