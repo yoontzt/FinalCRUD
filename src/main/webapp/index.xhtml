@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+</h:head>
+
+<h:body>
+
+	<p:commandButton value="Add New Employee" type="button"
+		onclick="PF('addEmployee').show();" />
+	<br />
+	<br />
+
+	<h:form id="listOfEmp">
+		<p:dataTable id="empData" value="#{homeBean.employeeList}" var="emp"
+			styleClass="employeeTable" paginator="true">
+
+			<p:column headerText="Id">
+				<h:outputText value="#{emp.id}" />
+			</p:column>
+
+			<p:column headerText="Name">
+				<h:outputText value="#{emp.name}" />
+			</p:column>
+
+			<p:column headerText="Age">
+				<h:outputText value="#{emp.age}" />
+			</p:column>
+
+			<p:column headerText="Email">
+				<h:outputText value="#{emp.email}" />
+			</p:column>
+
+			<p:column headerText="Department Name">
+				<h:outputText value="#{emp.department.name}" />
+			</p:column>
+
+
+			<p:column>
+
+				<p:commandButton value="Delete"
+					action="#{homeBean.deleteEmployeeFromPage(emp)}" update="empData"
+					process="@form"
+					onclick="if(!confirm('Are you sure you want to permentaly delete this data?')) {return false;}">
+				</p:commandButton>
+			</p:column>
+
+			<p:column>
+
+				<p:commandButton value="Update" update=":updateform"
+					action="#{homeBean.viewEmployee(emp)}">
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+	<!-- 	dialog for add -->
+	<p:dialog header="New Employee Form" widgetVar="addEmployee">
+		<h:form id="emform">
+			<h:panelGrid columns="1" styleClass="updatePageGrid" id="grid">
+
+				<p:outputLabel for="name" value="Name:" />
+				<p:inputText id="name" required="true"
+					requiredMessage="Name is required"
+					validatorMessage="Please enter a valid name."
+					value="#{homeBean.employee.name}">
+					<f:validateRegex pattern="[a-zA-Z ]{2,}" />
+
+				</p:inputText>
+
+
+				<p:outputLabel for="age" value="Age:" />
+				<p:inputText id="age" value="#{homeBean.employee.age}" size="20"
+					required="true" label="age" requiredMessage="Age is required"
+					converterMessage="Age must be a number."
+					validatorMessage="Age must be btween 18 and 45.">
+					<f:validateLongRange minimum="18" maximum="45" />
+				</p:inputText>
+
+
+				<p:outputLabel for="email" value="Email:" />
+				<p:inputText id="email" value="#{homeBean.employee.email}" size="20"
+					required="true" label="email" requiredMessage="Email is requied"
+					validatorMessage="Email is invalid.">
+					<f:validateRegex
+						pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+				</p:inputText>
+
+
+				<p:outputLabel for="department" value="Department:" />
+				<p:selectOneMenu id="department" value="#{homeBean.department.id}"
+					valueChangeListener="#{homeBean.changeDepartment}">
+					<f:selectItems value="#{homeBean.departmentList}" var="_dept"
+						itemValue="#{_dept.id}" itemLabel="#{_dept.name}" />
+				</p:selectOneMenu>
+				<h:panelGroup>
+					<p:commandButton value="Cancel" action="index" />
+					<p:commandButton value="Add" action="#{homeBean.addNewEmployee()}"
+						update=":emform :listOfEmp" process="@form" />
+				</h:panelGroup>
+			</h:panelGrid>
+
+		</h:form>
+
+	</p:dialog>
+
+
+
+	<!-- 	dialog for update -->
+	<p:dialog header="Update Employee" widgetVar="UpdateEmployee">
+		<h:form id="updateform">
+			<p:panelGrid columns="1" styleClass="updatePageGrid width-100" id="grid">
+ 
+				<p:outputLabel for="name" value="Name:" />
+				<p:inputText id="name" required="true" styleClass="width-100"
+					value="#{homeBean.employee.name}"
+					requiredMessage="Name is required"
+					validatorMessage="Please enter a valid name.">
+					<f:validateRegex pattern="[a-zA-Z]{2,}" />
+				</p:inputText>
+
+
+				<p:outputLabel for="age" value="Age:" />
+				<p:inputText id="age" value="#{homeBean.employee.age}" size="20"  styleClass="width-100"
+					required="true" label="age" requiredMessage="Age is required"
+					converterMessage="Age must be a number."
+					validatorMessage="Age must be btween 18 and 45.">
+					<f:validateLongRange minimum="18" maximum="45" />
+				</p:inputText>
+
+
+				<p:outputLabel for="email" value="Email:" />
+				<p:inputText id="email" value="#{homeBean.employee.email}" size="20"  styleClass="width-100"
+					required="true" label="email" requiredMessage="Email is requied"
+					validatorMessage="Email is invalid.">
+					<f:validateRegex
+						pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+				</p:inputText>
+
+				<!-- dd/MM/YYYY d/M/YYYY dd-MM-YYYY dd.MM.YYYY  dd MM YYYY -->
+				<!-- 					<p:inputText id ="date" > -->
+				<!-- 					</p:inputText> -->
+
+				<p:outputLabel for="department" value="" />
+				<p:selectOneMenu id="department" value="#{homeBean.id}"  
+					valueChangeListener="#{homeBean.changeDepartment}">
+					<f:selectItems value="#{homeBean.departmentList}" var="_dept"
+						itemValue="#{_dept.id}" itemLabel="#{_dept.name}" />
+				</p:selectOneMenu>
+
+
+			</p:panelGrid>
+
+
+			<p:commandButton value="Update"
+				action="#{homeBean.updateEmployeeFromPage()}"
+				update="grid :listOfEmp"
+				onclick="if(!confirm('Are you sure you want to update this data?')) {return false;}">
+			</p:commandButton>
+
+		</h:form>
+	</p:dialog>
+
+
+</h:body>
+</html>

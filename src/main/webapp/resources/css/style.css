@@ -1,0 +1,80 @@
+body {
+	background-color: white;
+}
+
+h2 {
+	color: rgb(26,183,234);
+	font-family: Arial, sans-serif;
+	font-size: 2em;
+	margin-top: 40px;
+	margin-left: 40px;
+	align: center;
+	text-transform: capitalize;
+	text-shadow: gray;
+}
+
+#emform {
+	align-items: center;
+}
+
+.mainPageGrid tr, .mainPageGrid.ui-panelgrid .ui-panelgrid-cell {
+	border: none;
+}
+
+.updatePageGrid tr, .updatePageGrid td, .updatePageGrid.ui-panelgrid .ui-panelgrid-cell
+	{
+	border: none;
+}
+
+.ui-datatable.employeeTable .ui-datatable-data tr, 
+.ui-datatable.employeeTable .ui-datatable-data-empty tr,
+.ui-datatable.employeeTable .ui-datatable-data td, 
+.ui-datatable.employeeTable .ui-datatable-data-empty td{
+	border: none;
+}
+
+.employeeTable th {
+	background: rgb(26,183,234);
+	color: #ffffff;
+	vertical-align: middle;
+	height: 40px;
+	vertical-align: middle;
+	border: none;
+	text-shadow: none;
+}
+
+.ui-widget-content {
+	border: none
+}
+
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only {
+	
+	background: none;
+	background-position: center;
+	background-color: inherit;
+	border: none;
+	border-color: none;
+	text-shadow: none;
+	box-shadow: none;
+}
+
+
+.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only.btn-save{
+	background-color: rgb(85,172,238);
+	border-color: white;
+	color: white;
+}
+
+.ui-widget-header{
+	background: none;
+	border: none;
+	background-color: #c4c4c4;
+}
+
+
+.red-icon {
+	color: red;
+}
+
+
+
